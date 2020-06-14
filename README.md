@@ -2,10 +2,31 @@
 
 Git Ignore... But for Dropbox...
 
-## Why?
+## Do I need the Dropbox CLI
 
-When building a complex program such as an OS, there can be a sh*t tonne of files built that you don't really need synced to dropbox. If they are synced, this can cause dropbox to use vast amounts of cpu cycles syncing the build files (that are often only temporary). This program will set all files that git ignores to also be ignored by dropbox sync.
+Nope. This uses extended file attributes to flag files as ignored.
+
+## How to use
+
+Running the command `dropbox-ignore` will look for a `.dbignore` file in the current directory and ignores any file that matches the pattern (using `.` as the root). The pattern is **the same as for a git ignore file**.
+
+If you already have a `.gitignore` file in a directory, simply run `dropbox-ignore -g` to us it.
+
+## Install
+
+### MacOS
+
+Via Brew
+
+```
+brew tap willfantom/dropbox-ignore
+brew install dropbox-ignore
+```
+
+## Is It Tested?
+
+On MacOS: Yes... Otherwise No
 
 ### One Big Issue...
 
-Dropbox Ignore will not only impact future changes to the files/folders, but actually remove the from dropbox all together!
+When a pattern is added to a gitignore, it will only impact matching files from when the change to the ignore file is made... This does not do that. When this application marks a file as ignored, it is also removed from your dropbox!
