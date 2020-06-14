@@ -13,7 +13,7 @@ func IgnoreFiles(f []*files.File) {
 		if file.Ignored {
 			err = osIgnoreFile(file.RelativePath)
 			if err != nil {
-				log.Errorf("😢 file could not be marked as ignored | %s")
+				log.Errorf("😢 file could not be marked as ignored | %s", file.RelativePath)
 			}
 		}
 	}	
@@ -25,7 +25,7 @@ func SyncFiles(f []*files.File) {
 		if !file.Ignored {
 			err = osUnIgnoreFile(file.RelativePath)
 			if err != nil {
-				log.Errorf("😢 file could not be marked to sync | %s")
+				log.Errorf("😢 file could not be marked to sync | %s", file.RelativePath)
 			}
 		}
 	}	
