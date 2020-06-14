@@ -4,8 +4,6 @@ package dropbox
 
 import (
 	"github.com/pkg/xattr"
-	log "github.com/sirupsen/logrus"
-	files "github.com/willfantom/dropbox-ignore/files"
 )
 
 const (
@@ -13,13 +11,16 @@ const (
 )
 
 // TODO: this.
-func osIgnoreFiles(f []*files.File) {
-	log.Debugf("tagging files with ignore xattr")
-
-	for _, file := range f {
-		if err := xattr.Set(file.RelativePath, ignoredXattr, []byte("1")); err != nil {
-			log.Fatal(err)
-		}
+func osIgnoreFile(filePath string) error {
+	if err := xattr.Set(filePath, ignoredXattr, []byte("1")); err != nil {
+		return err
 	}
+	return nil
+}
 
+func osUnIgnoreFile(filePath string) error {
+	if err := xattr.Remove(filePath, ignoredXattr); err != nil {
+		return err
+	}
+	return nil
 }

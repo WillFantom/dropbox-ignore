@@ -9,7 +9,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func GetIgnoredList(ignorePath string, baseDir string, maxDepth int) ([]*File, error) {
+func GetIgnoredList(ignorePath string, baseDir string) ([]*File, error) {
 	var err error
 	log.Debugf("Loading dropbox ignore file: %s", ignorePath)
 	gi, err := gitignore.CompileIgnoreFile(ignorePath)

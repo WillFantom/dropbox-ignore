@@ -6,10 +6,16 @@ import (
 	"github.com/willfantom/dropbox-ignore/files"
 )
 
+const (
+	defaultFile string = "./dpignore"
+	defaultRoot string = "."
+	gitignoreFile string = "./gitignore"
+)
+
 func main() {
 	log.SetLevel(log.DebugLevel)
 	log.Debugf("running dropbox ignore")
-	files, err := files.GetIgnoredList(".dpignore", ".", 1)
+	files, err := files.GetIgnoredList(defaultFile, defaultRoot)
 	if err != nil {
 		log.Fatalf("could not parse directory for dropbox ignore")
 	}
