@@ -1,45 +1,17 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"path/filepath"
-
-	gitignore "github.com/monochromegane/go-gitignore"
+	log "github.com/sirupsen/logrus"
+	dropbox "github.com/willfantom/dropbox-ignore/dropbox"
+	"github.com/willfantom/dropbox-ignore/files"
 )
 
 func main() {
-	var err error
-	gi, err := gitignore.NewGitIgnore("./.gitignore", ".")
+	log.SetLevel(log.DebugLevel)
+	log.Debugf("running dropbox ignore")
+	files, err := files.GetIgnoredList(".dpignore", ".", 1)
 	if err != nil {
-		panic(err)
+		log.Fatalf("could not parse directory for dropbox ignore")
 	}
-	paths, err := FilePathWalkDir(".")
-	if err != nil {
-		panic(err)
-	}
-	for _, path := range paths {
-		isAccepted := gi.Match(path, IsDirectory(path))
-		fmt.Printf("%s -> %v\n", path, isAccepted)
-	}
-	fmt.Printf("%v", gi)
-}
-
-func FilePathWalkDir(root string) ([]string, error) {
-	var files []string
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-			if !info.IsDir() {
-					files = append(files, path)
-			}
-			return nil
-	})
-	return files, err
-}
-
-func IsDirectory(path string) (bool) {
-	fileInfo, err := os.Stat(path)
-	if err != nil{
-		panic(err)
-	}
-	return fileInfo.IsDir()
+	dropbox.IgnoreFiles(files)
 }
