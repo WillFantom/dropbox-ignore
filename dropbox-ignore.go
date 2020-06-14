@@ -19,6 +19,7 @@ func main() {
 	fmt.Println("Dropbox Ignore...")
 	useGitIgnore := flag.Bool("g", false, "use .gitignore file rather then .dbignore")
 	debugLevel := flag.Bool("d", false, "get debug level logs")
+	doUpdate := flag.Bool("u", false, "also mark files to sync that don't match")
 	flag.Parse()
 	if *debugLevel {
 		log.SetLevel(log.DebugLevel)
@@ -31,5 +32,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("could not parse directory for dropbox ignore")
 	}
-	dropbox.IgnoreFiles(files)
+	count := dropbox.IgnoreFiles(files)
+	fmt.Printf("...Ignored %d files \n", count)
+	if *doUpdate {
+		updateCount := dropbox.SyncFiles(files)
+		fmt.Printf("...Un-Ignored %d files \n", updateCount)
+	}
+	
 }
