@@ -3,12 +3,32 @@ on:
     types: [created]
 
 jobs:
-  release:
-    name: Release Go Binary
+  release-mac:
+    name: Release Go Binary for MacOS
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [linux, darwin]
+        goos: [darwin]
+        goarch: ["386", amd64]
+    steps:
+    - 
+      name: Checkout
+      uses: actions/checkout@v2
+    - 
+      name: Build & Release
+      uses: wangyoucao577/go-release-action@v1.8
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ matrix.goos }}
+        goarch: ${{ matrix.goarch }}
+        binary_name: "dropbox-ignore"
+
+  release-linux:
+    name: Release Go Binary for Linux
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [linux]
         goarch: ["386", amd64, arm64]
     steps:
     - 
