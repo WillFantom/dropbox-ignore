@@ -26,6 +26,8 @@ TODO: Create script to automate this
 
 ### Brew [macos]
 
+> probably don't use this yet...
+
 ```
 brew tap willfantom/dropbox-ignore
 brew install dropbox-ignore
