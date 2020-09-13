@@ -12,6 +12,10 @@ Running the command `dropbox-ignore` will look for a `.dbignore` file in the cur
 
 If you already have a `.gitignore` file in a directory, simply run `dropbox-ignore -g` to use it instead of a `.dbignore` file.
 
+## Demo
+
+![Demo Gif](demo.gif)
+
 ## Install
 
 ### Github Release
